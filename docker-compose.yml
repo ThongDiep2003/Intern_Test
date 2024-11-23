@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: 127.0.0.1        # Sử dụng địa chỉ IP để kết nối với MySQL trên XAMPP
+      DB_USER: root             # Tài khoản root của XAMPP
+      DB_PASSWORD: ""           # Mật khẩu trống
+      DB_NAME: test             # Tên database
+      JWT_SECRET: mysupersecretkey12345 # Secret key cho JWT
+    depends_on:
+      - frontend
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:8080/auth # API URL kết nối backend
